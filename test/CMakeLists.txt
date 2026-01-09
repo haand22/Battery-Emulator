@@ -144,6 +144,7 @@ add_executable(tests
     ../Software/src/battery/THINK-BATTERY.cpp
     ../Software/src/battery/VOLVO-SPA-BATTERY.cpp
     ../Software/src/battery/VOLVO-SPA-HYBRID-BATTERY.cpp
+    ../Software/src/battery/BATRIUM-BMS.cpp
     ../Software/src/inverter/AFORE-CAN.cpp
     ../Software/src/inverter/BYD-CAN.cpp
     ../Software/src/inverter/BYD-MODBUS.cpp

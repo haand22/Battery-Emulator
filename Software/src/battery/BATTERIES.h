@@ -59,6 +59,7 @@ void setup_shunt();
 #include "THINK-BATTERY.h"
 #include "VOLVO-SPA-BATTERY.h"
 #include "VOLVO-SPA-HYBRID-BATTERY.h"
+#include "BATRIUM-BMS.h"
 
 void setup_battery(void);
 Battery* create_battery(BatteryType type);
