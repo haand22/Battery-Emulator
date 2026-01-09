@@ -922,6 +922,23 @@ struct DATALAYER_INFO_ZOE_PH2 {
   bool UserRequestNVROLReset = false;
 };
 
+struct DATALAYER_INFO_BATRIUM {
+  uint16_t hardware_version = 0;
+  uint16_t firmware_version = 0;
+  uint32_t device_serial_number = 0;
+
+  uint8_t cells_in_bypass = 0;
+  uint8_t cells_initial_bypass = 0;
+  uint8_t cells_final_bypass = 0;
+
+  uint8_t critical_control_flags = 0;   // Bit0=OK state, Bit1=Transition, Bit2=Precharge
+  uint8_t charge_control_flags = 0;     // Bit0=On, Bit1=Transition, Bit2=Limited power
+  uint8_t discharge_control_flags = 0;  // Bit0=On, Bit1=Transition, Bit2=Limited power
+  uint8_t heat_control_flags = 0;       // Bit0=On, Bit1=Transition
+  uint8_t cool_control_flags = 0;       // Bit0=On, Bit1=Transition
+  uint8_t cell_balancing_flags = 0;     // Bit0=Cells in bypass, Bit1=Bypass temp relief
+};
+
 class DataLayerExtended {
  public:
   DATALAYER_INFO_BOLTAMPERA boltampera;
@@ -943,6 +960,7 @@ class DataLayerExtended {
   DATALAYER_INFO_VOLVO_HYBRID VolvoHybrid;
   DATALAYER_INFO_ZOE zoe;
   DATALAYER_INFO_ZOE_PH2 zoePH2;
+  DATALAYER_INFO_BATRIUM batrium;
 };
 
 extern DataLayerExtended datalayer_extended;

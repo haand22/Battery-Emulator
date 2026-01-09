@@ -50,7 +50,7 @@ void BatriumBattery::handle_incoming_can_frame(CAN_frame rx_frame) {
 
   switch (id) {
     // =========================================================
-    // Device versioning (Base + 0x00)
+    // Device versioning (Base + 0x00) | 10s interval
     // =========================================================
     case BATRIUM_BASE_ADDR + 0x00:
       datalayer.battery.status.CAN_battery_still_alive = CAN_STILL_ALIVE;
@@ -63,7 +63,7 @@ void BatriumBattery::handle_incoming_can_frame(CAN_frame rx_frame) {
       break;
 
     // =========================================================
-    // Cell voltage limits (Base + 0x01)
+    // Cell voltage limits (Base + 0x01) | 100ms interval
     // =========================================================
     case BATRIUM_BASE_ADDR + 0x01:
       datalayer.battery.status.CAN_battery_still_alive = CAN_STILL_ALIVE;
@@ -77,7 +77,7 @@ void BatriumBattery::handle_incoming_can_frame(CAN_frame rx_frame) {
       break;
 
     // =========================================================
-    // Cell temperature limits (Base + 0x02)
+    // Cell temperature limits (Base + 0x02) | 1s interval
     // =========================================================
     case BATRIUM_BASE_ADDR + 0x02:
       datalayer.battery.status.CAN_battery_still_alive = CAN_STILL_ALIVE;
@@ -89,17 +89,22 @@ void BatriumBattery::handle_incoming_can_frame(CAN_frame rx_frame) {
       break;
 
     // =========================================================
-    // Cell bypass summary (Base + 0x03)
+    // Cell bypass summary (Base + 0x03) | 1s interval
     // =========================================================
     case BATRIUM_BASE_ADDR + 0x03:
       datalayer.battery.status.CAN_battery_still_alive = CAN_STILL_ALIVE;
       cells_in_bypass = rx_frame.data.u8[0];
+      datalayer_extended.batrium.cells_in_bypass = cells_in_bypass;
+
       cells_initial_bypass = rx_frame.data.u8[1];
+      datalayer_extended.batrium.cells_initial_bypass = cells_initial_bypass;
+
       cells_final_bypass = rx_frame.data.u8[2];
+      datalayer_extended.batrium.cells_final_bypass = cells_final_bypass;
       break;
 
     // =========================================================
-    // Shunt power monitoring (Base + 0x04)
+    // Shunt power monitoring (Base + 0x04) | 100ms interval
     // =========================================================
     case BATRIUM_BASE_ADDR + 0x04:
       datalayer.battery.status.CAN_battery_still_alive = CAN_STILL_ALIVE;
@@ -111,7 +116,7 @@ void BatriumBattery::handle_incoming_can_frame(CAN_frame rx_frame) {
       break;
 
     // =========================================================
-    // Shunt state monitoring (Base + 0x05)
+    // Shunt state monitoring (Base + 0x05) | 1s interval
     // =========================================================
     case BATRIUM_BASE_ADDR + 0x05:
       datalayer.battery.status.CAN_battery_still_alive = CAN_STILL_ALIVE;
@@ -126,7 +131,7 @@ void BatriumBattery::handle_incoming_can_frame(CAN_frame rx_frame) {
       break;
 
     // =========================================================
-    // Remote control target limits (Base + 0x06)
+    // Remote control target limits (Base + 0x06) | 100ms interval
     // =========================================================
     case BATRIUM_BASE_ADDR + 0x06:
       datalayer.battery.status.CAN_battery_still_alive = CAN_STILL_ALIVE;
@@ -143,16 +148,27 @@ void BatriumBattery::handle_incoming_can_frame(CAN_frame rx_frame) {
       break;
 
     // =========================================================
-    // Control flag logic state (Base + 0x07)
+    // Control flag logic state (Base + 0x07) | 100ms interval
     // =========================================================
     case BATRIUM_BASE_ADDR + 0x07:
       datalayer.battery.status.CAN_battery_still_alive = CAN_STILL_ALIVE;
       critical_control_flags = rx_frame.data.u8[0];
+      datalayer_extended.batrium.critical_control_flags = critical_control_flags;
+
       charge_control_flags = rx_frame.data.u8[1];
+      datalayer_extended.batrium.charge_control_flags = charge_control_flags;
+
       discharge_control_flags = rx_frame.data.u8[2];
+      datalayer_extended.batrium.discharge_control_flags = discharge_control_flags;
+
       heat_control_flags = rx_frame.data.u8[3];
+      datalayer_extended.batrium.heat_control_flags = heat_control_flags;
+
       cool_control_flags = rx_frame.data.u8[4];
+      datalayer_extended.batrium.cool_control_flags = cool_control_flags;
+
       cell_balancing_flags = rx_frame.data.u8[5];
+      datalayer_extended.batrium.cell_balancing_flags = cell_balancing_flags;
       break;
 
     default:
