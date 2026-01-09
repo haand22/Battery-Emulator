@@ -5,26 +5,29 @@
 #include "../devboard/utils/events.h"
 
 void BatriumBattery::update_values() {
-
-  // Checked
+  // Update datalayer values based on latest readouts
   datalayer.battery.status.real_soc = state_of_charge;
   datalayer.battery.status.soh_pptt = state_of_health;
+
+  // Voltage and current
   datalayer.battery.status.voltage_dV = shunt_voltage_mV / 100;
   datalayer.battery.status.current_dA = shunt_current_mA / 100;
-  datalayer.battery.status.max_charge_power_W = (charge_target_current_mA * shunt_voltage_mV) / 1000000L;
 
+  // Power calculations
+  datalayer.battery.status.max_charge_power_W = (charge_target_current_mA * shunt_voltage_mV) / 1000000L;
   datalayer.battery.status.max_discharge_power_W = (discharge_target_current_mA * shunt_voltage_mV) / 1000000L;
 
+  // Remaining capacity
   datalayer.battery.status.remaining_capacity_Wh = (remaining_capacity_mAh * shunt_voltage_mV) / 1000000L;
 
+  // Temperatures
   datalayer.battery.status.temperature_min_dC = cell_temp_min_degC * 10;
   datalayer.battery.status.temperature_max_dC = cell_temp_max_degC * 10;
 
-  //Map all cell voltages to the global array
+  // Cell voltages
   for (uint8_t i = 0; i < MAX_AMOUNT_CELLS; i++) {
     datalayer.battery.status.cell_voltages_mV[i] = cell_voltage_avg_mV;  //Default to average
   }
-
   datalayer.battery.status.cell_max_voltage_mV = cell_voltage_max_mV;
   datalayer.battery.status.cell_min_voltage_mV = cell_voltage_min_mV;
 
@@ -37,6 +40,7 @@ void BatriumBattery::update_values() {
     datalayer.battery.info.number_of_cells = amount_of_detected_cells;
   }
 
+  // Balancing status
   datalayer.battery.status.balancing_status =
       cell_balancing_flags > 0 ? BALANCING_STATUS_ACTIVE : BALANCING_STATUS_READY;
 }
